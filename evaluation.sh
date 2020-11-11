@@ -2,11 +2,13 @@
 
 # Evaluation script. Run as: ./evaluation.sh <parsed_data> <gold_data>
 
+set -e
+
 ndigits=${3:-3}
 restarts=${4:-4}
 smatch_path="../transition-amr-parser/smatch/smatch.py"    # to control the version to be v1.0.4
 
-out=`python ${smatch_path} --pr --significant $ndigits -r $restarts -f "$1" "$2"`
+out=`python ${smatch_path} --pr --significant ${ndigits} -r ${restarts} -f "$1" "$2"`
 pr=`echo $out | cut -d' ' -f2`
 rc=`echo $out | cut -d' ' -f4`
 fs=`echo $out | cut -d' ' -f6`
