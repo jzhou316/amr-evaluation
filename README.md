@@ -1,3 +1,4 @@
+# (An updated version for some customization)
 # amr-evaluation
 
 Evaluation metrics to compare AMR graphs based on Smatch (http://amr.isi.edu/evaluation.html). The script computes a set of metrics between AMR graphs in addition to the traditional Smatch code:
