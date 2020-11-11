@@ -2,8 +2,8 @@
 
 # Evaluation script. Run as: ./evaluation.sh <parsed_data> <gold_data>
 
-ndigits=3
-restarts=4
+ndigits=${3:-3}
+restarts=${4:-4}
 smatch_path="../transition-amr-parser/smatch/smatch.py"    # to control the version to be v1.0.4
 
 out=`python ${smatch_path} --pr --significant $ndigits -r $restarts -f "$1" "$2"`
