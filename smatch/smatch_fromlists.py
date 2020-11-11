@@ -783,7 +783,7 @@ def score_amr_pairs(f1, f2, justinstance=False, justattribute=False, justrelatio
         yield compute_f(total_match_num, total_test_num, total_gold_num)
 
 
-def run(list1, list2, pr_flag):
+def run(list1, list2, pr_flag, r=4, significant=2):
     """
     Main function of smatch score calculation
     """
@@ -794,14 +794,14 @@ def run(list1, list2, pr_flag):
     global match_triple_dict
     # set the iteration number
     # total iteration number = restart number + 1
-    iteration_num = 5
+    iteration_num = r + 1
     # significant digits to print out
-    floatdisplay = "%%.%df" % 2
+    floatdisplay = "%%.%df" % significant
     for (precision, recall, best_f_score) in score_amr_pairs(list1, list2,
                                                              justinstance=False,
                                                              justattribute=False,
                                                              justrelation=False):
         return precision, recall, best_f_score
 
-def main(list1, list2, pr_flag=False):
-    return run(list1, list2, pr_flag)
+def main(list1, list2, pr_flag=False, r=4, significant=2):
+    return run(list1, list2, pr_flag, r, significant)
