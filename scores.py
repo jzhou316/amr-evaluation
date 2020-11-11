@@ -18,6 +18,15 @@ from utils import *
 pred = open(sys.argv[1]).read().strip().split("\n\n")
 gold = open(sys.argv[2]).read().strip().split("\n\n")
 
+if len(sys.argv) >= 4:
+    significant = int(sys.argv[3])
+    if len(sys.argv) >= 5:
+        r = int(sys.argv[4])
+    else:
+        r = 4    # default number of restarts
+else:
+    significant = 2    # default number of smatch digits
+
 inters = defaultdict(int)
 golds = defaultdict(int)
 preds = defaultdict(int)
@@ -87,11 +96,11 @@ for score in preds:
         rc = 0
     if pr + rc > 0:
         f = 2*(pr*rc)/(pr+rc)
-        print (score, '-> P:', "{0:.2f}".format(pr), ', R:', "{0:.2f}".format(rc), ', F:', "{0:.2f}".format(f))
+        print (score, '-> P:', f"{pr:.{significant}f}", ', R:', f"{rc:.{significant}f}", ', F:', f"{f:.{significant}f}")
     else: 
-        print (score, '-> P:', "{0:.2f}".format(pr), ', R:', "{0:.2f}".format(rc), ', F: 0.00')
+        print (score, '-> P:', f"{pr:.{significant}f}", ', R:', f"{rc:.{significant}f}", ', F: 0.00')
 
-pr, rc, f = smatch.main(reentrancies_pred, reentrancies_gold, True)
-print ('Reentrancies -> P:', "{0:.2f}".format(float(pr)), ', R:', "{0:.2f}".format(float(rc)), ', F:', "{0:.2f}".format(float(f)))
-pr, rc, f = smatch.main(srl_pred, srl_gold, True)
-print ('SRL -> P:', "{0:.2f}".format(float(pr)), ', R:', "{0:.2f}".format(float(rc)), ', F:', "{0:.2f}".format(float(f)))
+pr, rc, f = smatch.main(reentrancies_pred, reentrancies_gold, True, r, significant)
+print ('Reentrancies -> P:', f"{float(pr):.{significant}f}", ', R:', f"{float(rc):.{significant}f}", ', F:', f"{float(f):.{significant}f}")
+pr, rc, f = smatch.main(srl_pred, srl_gold, True, r, significant)
+print ('SRL -> P:', f"{float(pr):.{significant}f}", ', R:', f"{float(rc):.{significant}f}", ', F:', f"{float(f):.{significant}f}")
